@@ -3,17 +3,17 @@
 // (gfx_present.c). The menu core calls no window system: events come in through menu_event_*, the drawing happens in the
 // present path's command buffer.
 //
-// F1 or Esc on the keyboard and Minus and Plus held together (consumed in poll_merged, input_menu_gate in input.h) open it;
-// F1, Esc, B or "Continue" close it. While it is open the game gets no input (input_menu, input.h) and keeps running; the
-// cursor is released from the mouse camera. Tabs Screen, Game, Mods, Sound, Controls and Menu (L / R or Q / E switch
-// them) hold option rows (ui/option_rows.h) over the cfg settings and the mods folder (mods.h); the bottom row has
-// "Continue" and "Quit game".
-// Test hooks (ui/menu.cpp): TOTK_MENU_TEST=<frame>[:<frames per page>] opens the menu at that presented frame and saves
-// one swapchain shot per tab into TOTK_MENU_TEST_DIR; TOTK_MENU_TEST_SET=<frame>:<key>=<value>[,...][;...] sets settings
-// at given frames without input (SAVE=1 writes totk.ini).
+// F1, F2 or Esc on the keyboard and Minus and Plus held together (consumed in poll_merged, input_menu_gate in input.h) open it;
+// F1, F2, Esc, B or "Continue" close it. F2 is a second shortcut for the existing settings menu, not a separate spawn menu.
+// While it is open the game gets no input (input_menu, input.h) and keeps running; the cursor is released from the mouse
+// camera. Tabs Screen, Game, Mods, Sound, Controls and Menu (L / R or Q / E switch them) hold option rows
+// (ui/option_rows.h) over the cfg settings and the mods folder (mods.h); the bottom row has "Continue" and "Quit game".
+// Test hooks (ui/menu.cpp): TOTK_MENU_TEST=<frame>[:<frames per page>] opens the menu at its first tab; each tab stays
+// <frames per page> frames (default 30) and its last frame's swapchain shot goes to TOTK_MENU_TEST_DIR;
+// TOTK_MENU_TEST_SET=<frame>:<key>=<value>[,...][;...] sets settings at given frames without input (SAVE=1 writes totk.ini).
 //
-// Threads: the event functions are called by the window thread, menu_toggle by whichever thread polls the pad, the
-// overlay functions by the present path under its lock. ImGui itself runs on the present path only.
+// Threads: the event functions are called by the window thread, menu_toggle by whichever thread polls the pad, the overlay
+// functions by the present path under its lock. ImGui itself runs on the present path only.
 #pragma once
 #include <stdint.h>
 #include <vulkan/vulkan.h>
@@ -24,7 +24,7 @@ extern "C" {
 
 // ---- state, any thread
 int menu_is_open(void);
-void menu_toggle(void);                   // F1 / Esc on the keyboard, Minus+Plus on the pad
+void menu_toggle(void);                   // F1 / F2 / Esc on the keyboard, Minus+Plus on the pad
 void menu_perf_cycle(void);               // F10: the performance overlay off, fps, full
 
 // ---- events from the window adapter, used only while the menu is open. key: an ImGuiKey; coordinates in pixels of the

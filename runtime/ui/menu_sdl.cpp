@@ -1,7 +1,7 @@
 // SDL3 adapter of the in-game menu: the window's events to menu events (menu.h), as ui/menu_win.cpp does for Win32.
 // Window thread (gfx_window_sdl.c's event loop, after input_sdl_event).
 //
-// F1 opens and closes the menu, Esc opens it (with the menu open, Esc goes to the menu, which closes). Esc also releases
+// F1 or F2 toggles the in-game menu; Esc opens it (with the menu open, Esc goes to the menu, which closes). Esc also releases
 // the cursor (input_sdl.c sees the event first; closing the menu gives the capture back). While the menu is open, its
 // keys, the mouse and focus changes go to it; the game reads the keyboard through input_sdl.c and gets nothing while
 // the menu is open (input_menu). Mouse positions come in window units and go to the menu in pixels.
@@ -43,8 +43,9 @@ extern "C" void menu_sdl_event(const SDL_Event *e) {
     float d = (float)gfx_window_sdl_density();
     switch (e->type) {
     case SDL_EVENT_KEY_DOWN:
-        // Esc with the menu open (opened by F1 too) is not a toggle here: it goes to the menu, which closes itself
-        if (!e->key.repeat && (e->key.scancode == SDL_SCANCODE_F1 ||
+        // F2 currently opens the existing settings menu; it is not an item spawner.
+        // Esc with the menu open (opened by F1 or F2 too) is not a toggle here: it goes to the menu, which closes itself.
+        if (!e->key.repeat && (e->key.scancode == SDL_SCANCODE_F1 || e->key.scancode == SDL_SCANCODE_F2 ||
                                (e->key.scancode == SDL_SCANCODE_ESCAPE && !menu_is_open()))) {
             menu_toggle();
             return;
