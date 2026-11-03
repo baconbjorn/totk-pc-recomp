@@ -1,0 +1,41 @@
+[Dev Spawn Menu]
+
+[Spawn Menu Toggle]
+80000104
+580F0000 00000000
+640F0000 00000000 00000001
+20000000
+
+[Spawn Sword]
+80000104
+580F0000 00000000
+640F0000 00000000 00000002
+20000000
+
+[Spawn Bombs]
+80000104
+580F0000 00000000
+640F0000 00000000 00000003
+20000000
+
+[Spawn Arrows]
+80000104
+580F0000 00000000
+640F0000 00000000 00000004
+20000000
+
+[Spawn Food]
+80000104
+580F0000 00000000
+640F0000 00000000 00000005
+20000000
+
+[Spawn Rupees]
+80000104
+580F0000 00000000
+640F0000 00000000 00000006
+20000000
+
+; This is a mod template for a dev spawn-menu cheat bundle.
+; The exact item IDs and memory writes must be matched to your live game build.
+; Use it with the DevSpawnMenu mod folder under mods/ and enable the mod.
